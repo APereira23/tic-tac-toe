@@ -1,4 +1,5 @@
 const gameWindows = document.querySelector('.game-windows');
+document.getElementById('btn-pve').disabled = "true";
 const game = (() => {
 
   const start = () => {
@@ -21,14 +22,21 @@ const game = (() => {
 
   const playPvp = () => {
     let playCounter = 0;
+    document.querySelector('.player-one-display').classList.add('player-active');  
     document.querySelectorAll('.table-box').forEach(box => box.addEventListener('click', (e) => {
       if (playCounter % 2 === 0) {
+        document.querySelector('.player-one-display').classList.remove('player-active');
+        document.querySelector('.player-two-display').classList.add('player-active');
         e.target.innerText = playerOne.symbol;
         playerOne.tracker.push(e.target.id);
+        playCounter++;
         checkWinner(playerOne);
       } else if (playCounter % 2 !== 0) {
+        document.querySelector('.player-two-display').classList.remove('player-active');
+        document.querySelector('.player-one-display').classList.add('player-active');
         e.target.innerText = playerTwo.symbol;
         playerTwo.tracker.push(e.target.id);
+        playCounter++;
         checkWinner(playerTwo);
       };
       function checkWinner(player) { 
@@ -53,32 +61,57 @@ const game = (() => {
         }
         e.target.inert = true;
       };
-      playCounter++;
-      if (playCounter === 10) console.log("draw");
-      
-      //missing function for draws!
-
-      // sometimes between rounds the same player plays twice in a row! 
-
+      if (playCounter === 9) draw();
+      function draw() {
+        document.querySelectorAll('.table-box').forEach(box => {
+          box.style.transition = "500ms";
+          box.style.backgroundColor = "gold";
+          box.style.transform = "scale(1.1)";
+        });
+        setTimeout(resetBoard, 700);
+        
+        document.querySelector('.player-one-display').classList.add('player-active');   
+        document.querySelector('.player-two-display').classList.remove('player-active');
+      };
 
     }));  
+
+
+
     function winRound(player) {
-      player.score += 1;
-      document.querySelector('.player-one-display').textContent = `${playerOne.name}: ${playerOne.score}`;
-      document.querySelector('.player-two-display').textContent = `${playerTwo.name}: ${playerTwo.score}`;
+      setTimeout(() => {
+        player.score += 1;
+        document.querySelector('.player-one-display').textContent = `${playerOne.name}: ${playerOne.score}`;
+        document.querySelector('.player-two-display').textContent = `${playerTwo.name}: ${playerTwo.score}`;
+      }, 700);
+      document.querySelectorAll('.table-box').forEach(box => {
+        box.style.transition = "500ms";
+        box.style.backgroundColor = "gold";
+        box.style.transform = "scale(1.1)";
+      });
+      setTimeout(resetBoard, 700);
+      document.querySelector('.player-one-display').classList.add('player-active');   
+      document.querySelector('.player-two-display').classList.remove('player-active');  
+    };
+
+
+    function resetBoard() {
+      document.querySelectorAll('.table-box').forEach(box => {
+        box.style.backgroundColor = "aliceblue";
+        box.style.transform = "scale(1.0)";
+      });
       playCounter = 0;
       playerOne.tracker = [];
       playerTwo.tracker = [];
       document.querySelectorAll('.table-box').forEach(box => {
         box.innerText = "";
         box.inert = false;
-      });      
-
-      
+      });
     };
   };
 
   const playPve = () => {
+    alert("game mode under development!")
   };
 
   const showRules = () => {
@@ -115,7 +148,7 @@ const game = (() => {
       if (num % 2 === 0) randomizer.textContent = "X";
       sortedNum += Math.floor(Math.random() * 2  + 1);
       //edit sortedNum after completion
-      if (sortedNum >= 1/*35*/) {
+      if (sortedNum >= 35) {
         clearInterval(getXO);
         randomizer.style.transition = "500ms";
         randomizer.style.fontSize = "2rem";
