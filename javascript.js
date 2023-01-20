@@ -1,5 +1,6 @@
 const gameWindows = document.querySelector('.game-windows');
 document.getElementById('btn-pve').disabled = "true";
+
 const game = (() => {
 
   const start = () => {
@@ -9,9 +10,13 @@ const game = (() => {
       document.getElementById('btn-reset').textContent = "Quit";
       startMenu.style.display = "none";
       if (btn.id === "btn-pvp") {
+        document.getElementById('background-music').play();
+        document.getElementById('background-music').loop = true;
         let gameMode = "pvp";
         game.randomize(gameMode);
       } else if (btn.id === "btn-pve") {
+        document.getElementById('background-music').play();
+        document.getElementById('background-music').loop = true;
         let gameMode = "pve";
         game.randomize(gameMode);
       } else if (btn.id === "btn-rules") {
@@ -24,6 +29,7 @@ const game = (() => {
     let playCounter = 0;
     document.querySelector('.player-one-display').classList.add('player-active');  
     document.querySelectorAll('.table-box').forEach(box => box.addEventListener('click', (e) => {
+      document.getElementById('play-sound').play();
       if (playCounter % 2 === 0) {
         document.querySelector('.player-one-display').classList.remove('player-active');
         document.querySelector('.player-two-display').classList.add('player-active');
@@ -52,10 +58,12 @@ const game = (() => {
         ];
         for (const element of winConditions) {
           let points = 0;
-          for (value of element) {
-            for (let i = 0; i < player.tracker.length; i++) {
-              if (value === player.tracker[i]) points += 1;
-              if (points === 3) return winRound(player);  
+          for (let i = 0; i < element.length; i++) {
+            for (let j = 0; j < player.tracker.length; j++) {
+              if (element[i] === player.tracker[j]) points += 1;
+              if (points === 3) {
+                return winRound(player, element);  
+              };
             }
           }
         }
@@ -63,6 +71,7 @@ const game = (() => {
       };
       if (playCounter === 9) draw();
       function draw() {
+        document.getElementById('draw-sound').play();
         document.querySelectorAll('.table-box').forEach(box => {
           box.style.transition = "500ms";
           box.style.backgroundColor = "gold";
@@ -78,16 +87,21 @@ const game = (() => {
 
 
 
-    function winRound(player) {
+    function winRound(player, element) {
+      document.getElementById('win-sound').play();
       setTimeout(() => {
         player.score += 1;
         document.querySelector('.player-one-display').textContent = `${playerOne.name}: ${playerOne.score}`;
         document.querySelector('.player-two-display').textContent = `${playerTwo.name}: ${playerTwo.score}`;
       }, 700);
       document.querySelectorAll('.table-box').forEach(box => {
-        box.style.transition = "500ms";
-        box.style.backgroundColor = "gold";
-        box.style.transform = "scale(1.1)";
+        for (value of element) {
+          if (value === box.id) {
+            box.style.transition = "500ms";
+            box.style.backgroundColor = "gold";
+            box.style.transform = "scale(1.1)";
+          }
+        }
       });
       setTimeout(resetBoard, 700);
       document.querySelector('.player-one-display').classList.add('player-active');   
@@ -236,3 +250,23 @@ const cpu = playerFactory('CPU', null, [], 0);
 
 game.start();
 game.reset();
+
+document.querySelectorAll('button').forEach(btn => btn.addEventListener('click', () => {
+  document.getElementById('btn-clicks').play();
+}));
+
+muteSound();
+function muteSound() {
+  const btnSound = document.getElementById('btn-sound');
+  btnSound.addEventListener('click', () => {
+    if (btnSound.classList != "mute-sound") {
+      document.querySelectorAll('audio').forEach(elem => elem.muted = true);
+      btnSound.classList.toggle('mute-sound');
+      btnSound.innerHTML = "&#128263";
+    } else if (btnSound.classList == "mute-sound") {
+      document.querySelectorAll('audio').forEach(elem => elem.muted = false);
+      btnSound.classList.toggle('mute-sound');
+      btnSound.innerHTML = "&#128266";        
+    }
+  });
+}

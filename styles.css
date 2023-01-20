@@ -15,7 +15,7 @@ html {
 }
 
 .start-menu-display {
-  padding-bottom: 10vh;
+  padding-bottom: 4vh;
 }
 
 .start-text {
@@ -33,15 +33,17 @@ html {
   position: relative;
   top: 5vh;
 }
-
-.btn-reset-container {
-  display: flex;
-  justify-content: center;
-}
 #btn-reset {
   max-width: 5rem;
   border-radius: 50%;
   display: none;
+}
+
+#btn-sound {
+  position:absolute;
+  width: 50px;
+  background: none;
+  border: none;
 }
 
 
@@ -86,16 +88,28 @@ html {
 }
 
 #b0 {
-  border-top-left-radius: 10%;
+  border-top-left-radius: 15%;
 }
 #b2 {
-  border-top-right-radius: 10%;
+  border-top-right-radius: 15%;
 }
 #b6 {
-  border-bottom-left-radius: 10%;
+  border-bottom-left-radius: 15%;
 }
 #b8 {
-  border-bottom-right-radius: 10%;
+  border-bottom-right-radius: 15%;
+}
+
+.player-active {
+  transition: 500ms;
+  font-size: 1.2rem;
+  color: green;
+}
+
+
+.btn-reset-container {
+  display: flex;
+  justify-content: center;
 }
 
 /*randomizer wheel*/
