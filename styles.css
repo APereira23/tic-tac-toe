@@ -1,6 +1,10 @@
 
 html {
-  font-size: 16px;
+  font-size: 13px;
+}
+
+body {
+  background-color: rgb(139, 196, 198);  
 }
 
 #title {
@@ -20,6 +24,9 @@ html {
 
 .start-text {
   margin-top: 5vh;
+  font-size: 1.2rem;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-weight: 800;
 }
 
 /*buttons*/
@@ -44,6 +51,7 @@ html {
   width: 50px;
   background: none;
   border: none;
+  font-size: 1.5rem;
 }
 
 
@@ -103,7 +111,12 @@ html {
 .player-active {
   transition: 500ms;
   font-size: 1.2rem;
-  color: green;
+  color: rgb(220, 233, 220);
+}
+
+.player-one-display,
+.player-two-display {
+  color: rgb(220, 233, 220);
 }
 
 

@@ -74,7 +74,7 @@ const game = (() => {
         document.getElementById('draw-sound').play();
         document.querySelectorAll('.table-box').forEach(box => {
           box.style.transition = "500ms";
-          box.style.backgroundColor = "gold";
+          box.style.backgroundColor = "red";
           box.style.transform = "scale(1.1)";
         });
         setTimeout(resetBoard, 700);
@@ -125,7 +125,7 @@ const game = (() => {
   };
 
   const playPve = () => {
-    alert("game mode under development!")
+    //game mode under development!;
   };
 
   const showRules = () => {
@@ -167,7 +167,6 @@ const game = (() => {
         randomizer.style.transition = "500ms";
         randomizer.style.fontSize = "2rem";
         randomizer.style.transform = "scale(1.1)";
-        randomizer.style.backgroundColor = "gold";
         const selection = document.createElement('div');
         selection.classList.add('selection','row');
         randomizeContainer.appendChild(selection);
