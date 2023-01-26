@@ -164,7 +164,7 @@ const game = (() => {
       if (num % 2 === 0) randomizer.textContent = "X";
       sortedNum += Math.floor(Math.random() * 2  + 1);
       //edit sortedNum after completion
-      if (sortedNum >= 2/*35*/) {
+      if (sortedNum >= 35) {
         clearInterval(getXO);
         randomizer.style.transition = "500ms";
         randomizer.style.fontSize = "2rem";
