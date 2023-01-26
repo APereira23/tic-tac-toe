@@ -29,21 +29,23 @@ const game = (() => {
     let playCounter = 0;
     document.querySelector('.player-one-display').classList.add('player-active');  
     document.querySelectorAll('.table-box').forEach(box => box.addEventListener('click', (e) => {
-      document.getElementById('play-sound').play();
-      if (playCounter % 2 === 0) {
-        document.querySelector('.player-one-display').classList.remove('player-active');
-        document.querySelector('.player-two-display').classList.add('player-active');
-        e.target.innerText = playerOne.symbol;
-        playerOne.tracker.push(e.target.id);
-        playCounter++;
-        checkWinner(playerOne);
-      } else if (playCounter % 2 !== 0) {
-        document.querySelector('.player-two-display').classList.remove('player-active');
-        document.querySelector('.player-one-display').classList.add('player-active');
-        e.target.innerText = playerTwo.symbol;
-        playerTwo.tracker.push(e.target.id);
-        playCounter++;
-        checkWinner(playerTwo);
+      if (!e.target.classList.contains('marked-box')) {
+        document.getElementById('play-sound').play();
+        if (playCounter % 2 === 0) {
+          document.querySelector('.player-one-display').classList.remove('player-active');
+          document.querySelector('.player-two-display').classList.add('player-active');
+          e.target.innerText = playerOne.symbol;
+          playerOne.tracker.push(e.target.id);
+          playCounter++;
+          checkWinner(playerOne);
+        } else if (playCounter % 2 !== 0) {
+          document.querySelector('.player-two-display').classList.remove('player-active');
+          document.querySelector('.player-one-display').classList.add('player-active');
+          e.target.innerText = playerTwo.symbol;
+          playerTwo.tracker.push(e.target.id);
+          playCounter++;
+          checkWinner(playerTwo);
+        };
       };
       function checkWinner(player) { 
         winConditions = [
@@ -67,7 +69,7 @@ const game = (() => {
             }
           }
         }
-        e.target.inert = true;
+        e.target.classList.add('marked-box');
       };
       if (playCounter === 9) draw();
       function draw() {
@@ -119,13 +121,13 @@ const game = (() => {
       playerTwo.tracker = [];
       document.querySelectorAll('.table-box').forEach(box => {
         box.innerText = "";
-        box.inert = false;
+        box.classList.remove('marked-box');
       });
     };
   };
 
   const playPve = () => {
-    //game mode under development!;
+    //to be added later!;
   };
 
   const showRules = () => {
@@ -162,7 +164,7 @@ const game = (() => {
       if (num % 2 === 0) randomizer.textContent = "X";
       sortedNum += Math.floor(Math.random() * 2  + 1);
       //edit sortedNum after completion
-      if (sortedNum >= 35) {
+      if (sortedNum >= 2/*35*/) {
         clearInterval(getXO);
         randomizer.style.transition = "500ms";
         randomizer.style.fontSize = "2rem";
@@ -207,7 +209,7 @@ const game = (() => {
       document.querySelector('.player-two-display').textContent = "";
       playerOne.tracker = [];
       playerTwo.tracker = [];
-      document.querySelectorAll('.table-box').forEach(box => box.inert = false);
+      document.querySelectorAll('.table-box').forEach(box => box.classList.remove('marked-box'));
 
     });
 
