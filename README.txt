@@ -1,3 +1,6 @@
+Simple implementation of a game of Tic Tac Toe.
+Built as part of The Odin Project's Javascript Course
+
 Credits:
 
 btn clicks: "interface" by Universfield (pixabay)
